@@ -46,19 +46,15 @@ const Index = () => {
             </div>
           </header>
 
-          {/* User Session Section */}
+          {/* Quick Action & Upload Area Section */}
           <section className="px-4 md:px-0">
-            <UserSession />
-          </section>
-
-          {/* Upload Area Section */}
-          <section className="px-4 md:px-0">
+            <h2 className="text-lg font-semibold mb-4">Quick Action</h2>
             <UploadArea />
           </section>
 
-          {/* Quick Stats Section */}
+          {/* Stats Section */}
           <section className="px-4 md:px-0">
-            <QuickStats />
+            <UserSession />
           </section>
 
           {/* Recent Uploads Section */}
