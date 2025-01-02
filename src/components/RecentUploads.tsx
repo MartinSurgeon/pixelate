@@ -1,6 +1,7 @@
 import { MoreVertical } from "lucide-react";
+import { useState } from "react";
 
-const recentFiles = [
+const allFiles = [
   {
     name: "File_Design.pdf",
     type: "PDF",
@@ -29,20 +30,40 @@ const recentFiles = [
     date: "4 days ago",
     color: "bg-violet-500",
   },
+  {
+    name: "Project_Brief.pdf",
+    type: "PDF",
+    size: "1.2MB",
+    date: "5 days ago",
+    color: "bg-orange-500",
+  },
+  {
+    name: "Team_Photo.jpg",
+    type: "JPG",
+    size: "5.5MB",
+    date: "6 days ago",
+    color: "bg-blue-500",
+  },
 ];
 
 export const RecentUploads = () => {
+  const [showAll, setShowAll] = useState(false);
+  const displayedFiles = showAll ? allFiles : allFiles.slice(0, 4);
+
   return (
     <div className="animate-fade-in">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-semibold">Recent Uploaded</h2>
-        <button className="text-sm text-primary hover:text-primary-hover transition-colors">
-          Show All
+        <button 
+          onClick={() => setShowAll(!showAll)}
+          className="text-sm text-primary hover:text-primary-hover transition-colors"
+        >
+          {showAll ? "Show Less" : "Show All"}
         </button>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {recentFiles.map((file) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {displayedFiles.map((file) => (
           <div key={file.name} className="bg-white rounded-lg p-4 card-shadow group">
             <div className="flex items-start justify-between mb-4">
               <div className={`${file.color} text-white px-3 py-1 rounded text-sm`}>
