@@ -1,5 +1,4 @@
 import { SearchBar } from "@/components/SearchBar";
-import { QuickStats } from "@/components/QuickStats";
 import { UploadArea } from "@/components/UploadArea";
 import { RecentUploads } from "@/components/RecentUploads";
 import { Sidebar } from "@/components/Sidebar";
@@ -19,19 +18,20 @@ const Index = () => {
       {/* Main Content */}
       <main 
         className={`
+          min-h-screen
           transition-all 
           duration-300 
-          ${sidebarCollapsed ? 'pl-20' : 'pl-[280px]'} 
-          pr-4 
-          md:pr-8 
-          pt-6 
-          md:pt-8
-          min-h-screen
+          ease-in-out
+          ${sidebarCollapsed ? 'ml-16' : 'ml-64'} 
+          px-4 
+          md:px-8 
+          py-6 
+          md:py-8
         `}
       >
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Header Section */}
-          <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-4 md:px-0">
+          <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div className="flex-1 max-w-md">
               <SearchBar />
             </div>
@@ -47,18 +47,18 @@ const Index = () => {
           </header>
 
           {/* Quick Action & Upload Area Section */}
-          <section className="px-4 md:px-0">
+          <section>
             <h2 className="text-lg font-semibold mb-4">Quick Action</h2>
             <UploadArea />
           </section>
 
           {/* Stats Section */}
-          <section className="px-4 md:px-0">
+          <section>
             <UserSession />
           </section>
 
           {/* Recent Uploads Section */}
-          <section className="px-4 md:px-0 pb-8">
+          <section className="pb-8">
             <RecentUploads />
           </section>
         </div>
