@@ -13,11 +13,26 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
+      {/* Sidebar */}
       <Sidebar collapsed={sidebarCollapsed} onCollapse={setSidebarCollapsed} />
-      <main className={`transition-all duration-300 ${sidebarCollapsed ? 'pl-20' : 'pl-[280px]'} p-4 md:p-8`}>
+
+      {/* Main Content */}
+      <main 
+        className={`
+          transition-all 
+          duration-300 
+          ${sidebarCollapsed ? 'pl-20' : 'pl-[280px]'} 
+          pr-4 
+          md:pr-8 
+          pt-6 
+          md:pt-8
+          min-h-screen
+        `}
+      >
         <div className="max-w-7xl mx-auto space-y-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div className="flex-1">
+          {/* Header Section */}
+          <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 px-4 md:px-0">
+            <div className="flex-1 max-w-md">
               <SearchBar />
             </div>
             <div className="flex items-center gap-4">
@@ -29,19 +44,25 @@ const Index = () => {
                 Add Asset +
               </button>
             </div>
-          </div>
+          </header>
 
-          <UserSession />
+          {/* User Session Section */}
+          <section className="px-4 md:px-0">
+            <UserSession />
+          </section>
 
-          <section>
+          {/* Upload Area Section */}
+          <section className="px-4 md:px-0">
             <UploadArea />
           </section>
 
-          <section>
+          {/* Quick Stats Section */}
+          <section className="px-4 md:px-0">
             <QuickStats />
           </section>
 
-          <section>
+          {/* Recent Uploads Section */}
+          <section className="px-4 md:px-0 pb-8">
             <RecentUploads />
           </section>
         </div>
