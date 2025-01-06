@@ -1,14 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { loginWithRedirect } = useAuth0();
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = () => {
     loginWithRedirect({
@@ -19,9 +24,40 @@ const SignIn = () => {
   };
 
   const handleEmailSignIn = () => {
+    if (!email || !password) {
+      toast({
+        title: "Error",
+        description: "Please fill in all fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
     loginWithRedirect({
       authorizationParams: {
         connection: 'Username-Password-Authentication'
+      },
+      appState: {
+        returnTo: "/"
+      }
+    });
+  };
+
+  const handleForgotPassword = () => {
+    if (!email) {
+      toast({
+        title: "Error",
+        description: "Please enter your email address",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    loginWithRedirect({
+      authorizationParams: {
+        connection: 'Username-Password-Authentication',
+        screen_hint: 'reset_password',
+        email: email
       }
     });
   };
@@ -41,7 +77,11 @@ const SignIn = () => {
         <div className="space-y-4">
           <div className="flex space-x-4">
             <Button className="w-1/2 bg-primary">Sign In</Button>
-            <Button variant="outline" className="w-1/2" onClick={() => window.location.href = "/auth/signup"}>
+            <Button 
+              variant="outline" 
+              className="w-1/2" 
+              onClick={() => navigate('/auth/signup')}
+            >
               Sign Up
             </Button>
           </div>
@@ -52,6 +92,8 @@ const SignIn = () => {
                 type="email"
                 placeholder="Enter your email"
                 className="pl-10"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             </div>
@@ -61,6 +103,8 @@ const SignIn = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 className="pl-10 pr-10"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <button
@@ -86,16 +130,19 @@ const SignIn = () => {
                   Remember me
                 </label>
               </div>
-              <Link
-                to="/forgot-password"
+              <button
+                onClick={handleForgotPassword}
                 className="text-sm text-primary hover:underline"
               >
                 Forgot Password?
-              </Link>
+              </button>
             </div>
           </div>
 
-          <Button onClick={handleEmailSignIn} className="w-full bg-[#0066FF] hover:bg-[#0052CC]">
+          <Button 
+            onClick={handleEmailSignIn} 
+            className="w-full bg-[#0066FF] hover:bg-[#0052CC]"
+          >
             Sign In
           </Button>
 

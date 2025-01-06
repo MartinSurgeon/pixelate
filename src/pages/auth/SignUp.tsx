@@ -1,14 +1,20 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Eye, EyeOff, User, Mail, Lock } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { loginWithRedirect } = useAuth0();
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = () => {
     loginWithRedirect({
@@ -20,10 +26,23 @@ const SignUp = () => {
   };
 
   const handleEmailSignUp = () => {
+    if (!name || !email || !password) {
+      toast({
+        title: "Error",
+        description: "Please fill in all fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
     loginWithRedirect({
       authorizationParams: {
         connection: 'Username-Password-Authentication',
         screen_hint: 'signup'
+      },
+      appState: {
+        returnTo: "/",
+        name: name
       }
     });
   };
@@ -37,12 +56,16 @@ const SignUp = () => {
             <span className="text-xs px-3 py-1 bg-black text-white rounded-full">Get Ready To Get DAM!</span>
           </div>
           <h1 className="text-2xl font-semibold">Sign Up Your Account</h1>
-          <p className="text-sm text-muted-foreground">Fill your account details to login</p>
+          <p className="text-sm text-muted-foreground">Fill your account details to register</p>
         </div>
 
         <div className="space-y-4">
           <div className="flex space-x-4">
-            <Button variant="outline" className="w-1/2" onClick={() => window.location.href = "/auth/signin"}>
+            <Button 
+              variant="outline" 
+              className="w-1/2"
+              onClick={() => navigate('/auth/signin')}
+            >
               Sign In
             </Button>
             <Button className="w-1/2 bg-primary">Sign Up</Button>
@@ -54,6 +77,8 @@ const SignUp = () => {
                 type="text"
                 placeholder="Enter your name"
                 className="pl-10"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
               <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             </div>
@@ -63,6 +88,8 @@ const SignUp = () => {
                 type="email"
                 placeholder="Enter your email"
                 className="pl-10"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             </div>
@@ -72,6 +99,8 @@ const SignUp = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 className="pl-10 pr-10"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <button
@@ -88,17 +117,20 @@ const SignUp = () => {
             </div>
 
             <div className="flex items-center space-x-2">
-              <Checkbox id="remember" />
+              <Checkbox id="terms" />
               <label
-                htmlFor="remember"
+                htmlFor="terms"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                Remember me
+                I agree to the Terms and Privacy Policy
               </label>
             </div>
           </div>
 
-          <Button onClick={handleEmailSignUp} className="w-full bg-[#0066FF] hover:bg-[#0052CC]">
+          <Button 
+            onClick={handleEmailSignUp} 
+            className="w-full bg-[#0066FF] hover:bg-[#0052CC]"
+          >
             Sign Up
           </Button>
 
@@ -127,7 +159,7 @@ const SignUp = () => {
           </Button>
 
           <div className="text-center text-sm">
-            <span className="text-muted-foreground">you agree to </span>
+            <span className="text-muted-foreground">By signing up, you agree to our </span>
             <Link to="/terms" className="text-primary hover:underline">
               Terms and Conditions
             </Link>
