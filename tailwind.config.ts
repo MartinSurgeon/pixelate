@@ -37,6 +37,14 @@ export default {
           DEFAULT: "#F1F1F3",
           foreground: "#6B7280",
         },
+        popover: {
+          DEFAULT: "hsl(0 0% 100%)",
+          foreground: "hsl(222.2 84% 4.9%)",
+        },
+        accent: {
+          DEFAULT: "hsl(220 14.3% 95.9%)",
+          foreground: "hsl(222.2 47.4% 11.2%)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
