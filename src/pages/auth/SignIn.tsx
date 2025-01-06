@@ -12,7 +12,17 @@ const SignIn = () => {
 
   const handleGoogleSignIn = () => {
     loginWithRedirect({
-      connection: "google-oauth2",
+      authorizationParams: {
+        connection: 'google-oauth2'
+      }
+    });
+  };
+
+  const handleEmailSignIn = () => {
+    loginWithRedirect({
+      authorizationParams: {
+        connection: 'Username-Password-Authentication'
+      }
     });
   };
 
@@ -85,7 +95,7 @@ const SignIn = () => {
             </div>
           </div>
 
-          <Button className="w-full bg-[#0066FF] hover:bg-[#0052CC]">
+          <Button onClick={handleEmailSignIn} className="w-full bg-[#0066FF] hover:bg-[#0052CC]">
             Sign In
           </Button>
 
