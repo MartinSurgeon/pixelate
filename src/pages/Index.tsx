@@ -3,8 +3,16 @@ import { UploadArea } from "@/components/UploadArea";
 import { RecentUploads } from "@/components/RecentUploads";
 import { Sidebar } from "@/components/Sidebar";
 import { UserSession } from "@/components/UserSession";
-import { Bell } from "lucide-react";
+import { Bell, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 
 const Index = () => {
@@ -12,10 +20,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
-      {/* Sidebar */}
       <Sidebar collapsed={sidebarCollapsed} onCollapse={setSidebarCollapsed} />
 
-      {/* Main Content */}
       <main 
         className={`
           min-h-screen
@@ -40,7 +46,31 @@ const Index = () => {
                 <Bell className="h-5 w-5" />
                 <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full"></span>
               </Button>
-              <button className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-hover transition-colors">
+              
+              {/* User Profile Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="relative">
+                    <User className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <DropdownMenuLabel>
+                    <div className="flex flex-col">
+                      <span className="font-medium">John Doe</span>
+                      <span className="text-xs text-gray-500">john@pixelate.com</span>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>Settings</DropdownMenuItem>
+                  <DropdownMenuItem>Billing</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem className="text-red-600">Log out</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <button className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
                 Add Asset +
               </button>
             </div>

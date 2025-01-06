@@ -20,7 +20,7 @@ export const Sidebar = ({ collapsed, onCollapse }: SidebarProps) => {
   return (
     <aside 
       className={`
-        fixed left-0 top-0 z-50 h-screen bg-white border-r border-gray-200
+        fixed left-0 top-0 z-40 h-screen bg-white border-r border-gray-200
         transition-all duration-300 ease-in-out
         ${collapsed ? 'w-16' : 'w-64'}
       `}
@@ -29,7 +29,7 @@ export const Sidebar = ({ collapsed, onCollapse }: SidebarProps) => {
         <div className="relative p-6">
           <button
             onClick={() => onCollapse(!collapsed)}
-            className="absolute -right-3 top-6 bg-white border border-gray-200 rounded-full p-1 hover:bg-gray-50 transition-colors"
+            className="absolute -right-3 top-6 bg-white border border-gray-200 rounded-full p-1 hover:bg-gray-50 transition-colors z-50"
           >
             {collapsed ? (
               <ChevronRight className="w-4 h-4" />
